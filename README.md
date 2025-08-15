@@ -9,6 +9,7 @@ A powerful command-line tool for interacting with GitHub Discussions without ope
 - 👀 View discussion details and comments
 - 💬 Post comments to discussions
 - ✨ Create new discussions
+- ✏️ Edit discussion titles and descriptions
 - 📊 Repository statistics and analytics
 - 🏷️ Filter by category, author, or comment count
 - ⚙️ Configurable settings and authentication
@@ -28,7 +29,7 @@ Install globally from npm registry:
 npm install -g @taizo-pro/github-discussions-cli
 ```
 
-After installation, the `gh-discussions` command will be available globally in your terminal.
+After installation, both the `gh-discussions` and `ghd` commands will be available globally in your terminal. You can use either command interchangeably.
 
 ### Alternative: npx (No Installation Required)
 
@@ -49,12 +50,18 @@ npx @taizo-pro/github-discussions-cli --help
 
 2. **Set up authentication**:
    ```bash
+   # Use either command
    gh-discussions config
+   # or the shorter alias
+   ghd config
    ```
 
 3. **Test with a public repository**:
    ```bash
+   # Use either command format
    gh-discussions list microsoft/vscode
+   # or shorter version
+   ghd list microsoft/vscode
    ```
 
 4. **View a specific discussion**:
@@ -183,6 +190,7 @@ gh-discussions list owner/repository
 | View discussion details | `public_repo` (public) / `repo` (private) | Discussions: Read |
 | Create comments | `public_repo` (public) / `repo` (private) | Discussions: Write |
 | Create discussions | `public_repo` (public) / `repo` (private) | Discussions: Write |
+| Edit discussions | `public_repo` (public) / `repo` (private) | Discussions: Write |
 
 #### Quick Setup Guide:
 
@@ -325,6 +333,27 @@ gh-discussions create "Feature Request" --editor
 gh-discussions create "Question" "How do I..." --category general
 ```
 
+### Edit Discussions
+```bash
+# Interactive editing (opens editor)
+gh-discussions edit 42
+
+# Edit title only
+gh-discussions edit 42 --title "Updated Title"
+
+# Edit description only
+gh-discussions edit 42 --body "Updated description"
+
+# Edit both title and description
+gh-discussions edit 42 --title "New Title" --body "New description"
+
+# Force interactive mode
+gh-discussions edit 42 --interactive
+
+# Edit in specific repository
+gh-discussions edit 42 --title "Update" owner/repository
+```
+
 ### Configuration
 ```bash
 # Show current configuration
@@ -414,6 +443,7 @@ npm test github-client.test.ts
 | `show <number> [repo]` | Show discussion details and comments | Core feature |
 | `comment <number> <message> [repo]` | Add a comment to a discussion | Core feature |
 | `create [title] [body] [repo]` | Create a new discussion | Core feature |
+| `edit <number> [repo]` | Edit discussion title and/or description | Added in v1.3.0 |
 | `search <query> [repo]` | Search discussions by text | Added in v1.1.0 |
 | `stats [repo]` | Show repository discussion statistics | Added in v1.1.0 |
 | `config` | Configure authentication and settings | Core feature |
@@ -439,6 +469,11 @@ npm test github-client.test.ts
 - `--order <direction>` - Sort order (asc, desc)
 - `--limit <number>` - Maximum results to return
 - `--format <format>` - Output format (table, json, markdown)
+
+#### Edit Command
+- `--title <title>` - New title for the discussion
+- `--body <body>` - New body/description for the discussion
+- `--interactive` - Force interactive mode to edit title and body
 
 #### Stats Command
 - `--detailed` - Show detailed statistics with recent activity
@@ -494,6 +529,8 @@ MIT License - see LICENSE file for details.
 - [x] Discussion listing and viewing
 - [x] Comment creation
 - [x] Discussion creation
+- [x] Discussion editing (title and description)
+- [x] Short command alias (`ghd`)
 - [x] npm package publication
 - [x] Discussion search and filtering
 - [x] Repository statistics and analytics
