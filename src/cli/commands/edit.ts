@@ -69,24 +69,27 @@ export const editCommand = new Command()
         if (answers.title.trim()) {
           newTitle = answers.title.trim();
         }
-        if (answers.body && answers.body.trim() !== currentDiscussion.body.trim()) {
+        if (answers.body !== undefined) {
           newBody = answers.body.trim();
         }
       }
 
       // Check if any changes were made
-      if (!newTitle && !newBody) {
-        console.log(chalk.yellow('No changes specified. Nothing to update.'));
+      const titleChanged = newTitle && newTitle !== currentDiscussion.title;
+      const bodyChanged = newBody && newBody !== currentDiscussion.body;
+      
+      if (!titleChanged && !bodyChanged) {
+        console.log(chalk.yellow('No changes detected. Nothing to update.'));
         return;
       }
 
       // Confirm changes
-      if (newTitle || newBody) {
+      if (titleChanged || bodyChanged) {
         console.log(chalk.blue('\nChanges to be made:'));
-        if (newTitle) {
+        if (titleChanged) {
           console.log(chalk.green(`Title: ${currentDiscussion.title} → ${newTitle}`));
         }
-        if (newBody) {
+        if (bodyChanged) {
           console.log(chalk.green(`Description: Updated (${newBody.length} characters)`));
         }
         console.log();
@@ -113,8 +116,8 @@ export const editCommand = new Command()
       
       const updatedDiscussion = await client.updateDiscussion(
         nodeId,
-        newTitle,
-        newBody
+        titleChanged ? newTitle : undefined,
+        bodyChanged ? newBody : undefined
       );
 
       spinner.succeed('Discussion updated successfully!');
