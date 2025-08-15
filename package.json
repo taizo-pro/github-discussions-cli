@@ -5,7 +5,8 @@
   "type": "module",
   "main": "dist/cli/index.js",
   "bin": {
-    "gh-discussions": "dist/cli/index.js"
+    "gh-discussions": "dist/cli/index.js",
+    "ghd": "dist/cli/index.js"
   },
   "scripts": {
     "build": "tsc",
