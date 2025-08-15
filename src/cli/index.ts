@@ -15,7 +15,7 @@ const program = new Command();
 program
   .name('gh-discussions')
   .description('CLI tool for GitHub Discussions')
-  .version('1.2.0');
+  .version('1.3.0');
 
 program.addCommand(listCommand);
 program.addCommand(showCommand);
