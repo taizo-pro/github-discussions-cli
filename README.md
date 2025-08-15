@@ -329,24 +329,30 @@ ghd create "Question" "How do I..." --category general
 
 ### Edit Discussions
 ```bash
-# Interactive editing (opens editor)
+# Interactive editing (opens editor with existing content)
 ghd edit 42
 
-# Edit title only
+# Edit title only (preserves existing description)
 ghd edit 42 --title "Updated Title"
 
-# Edit description only
+# Edit description only (preserves existing title)
 ghd edit 42 --body "Updated description"
 
 # Edit both title and description
 ghd edit 42 --title "New Title" --body "New description"
 
-# Force interactive mode
+# Force interactive mode (loads existing content in editor)
 ghd edit 42 --interactive
 
 # Edit in specific repository
 ghd edit 42 --title "Update" owner/repository
 ```
+
+**Enhanced Edit Features:**
+- **Preserves existing content**: Interactive mode loads current title and description
+- **Smart change detection**: Only updates fields that have actually changed
+- **Efficient updates**: Sends only modified fields to GitHub API
+- **Non-destructive editing**: Existing content is never lost during editing
 
 ### Configuration
 ```bash
@@ -437,7 +443,7 @@ npm test github-client.test.ts
 | `show <number> [repo]` | Show discussion details and comments | Core feature |
 | `comment <number> <message> [repo]` | Add a comment to a discussion | Core feature |
 | `create [title] [body] [repo]` | Create a new discussion | Core feature |
-| `edit <number> [repo]` | Edit discussion title and/or description | Added in v1.3.0 |
+| `edit <number> [repo]` | Edit discussion title and/or description with content preservation | Enhanced in v1.3.1 |
 | `search <query> [repo]` | Search discussions by text | Added in v1.1.0 |
 | `stats [repo]` | Show repository discussion statistics | Added in v1.1.0 |
 | `config` | Configure authentication and settings | Core feature |
