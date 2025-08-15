@@ -50,32 +50,26 @@ npx @taizo-pro/github-discussions-cli --help
 
 2. **Set up authentication**:
    ```bash
-   # Use either command
-   gh-discussions config
-   # or the shorter alias
    ghd config
    ```
 
 3. **Test with a public repository**:
    ```bash
-   # Use either command format
-   gh-discussions list microsoft/vscode
-   # or shorter version
    ghd list microsoft/vscode
    ```
 
 4. **View a specific discussion**:
    ```bash
-   gh-discussions show 1 microsoft/vscode
+   ghd show 1 microsoft/vscode
    ```
 
 5. **Try the new search and statistics features**:
    ```bash
    # Search for discussions about bugs
-   gh-discussions search "bug" microsoft/vscode
+   ghd search "bug" microsoft/vscode
    
    # View repository statistics
-   gh-discussions stats microsoft/vscode
+   ghd stats microsoft/vscode
    ```
 
 ## Setup
@@ -139,7 +133,7 @@ Before using the CLI, you need to create a GitHub Personal Access Token with the
 Run the interactive configuration setup:
 
 ```bash
-gh-discussions config
+ghd config
 ```
 
 The setup will prompt you for:
@@ -153,10 +147,10 @@ Test your configuration:
 
 ```bash
 # Show current configuration
-gh-discussions config --show
+ghd config --show
 
 # Test by listing discussions (replace with actual repo)
-gh-discussions list owner/repository
+ghd list owner/repository
 ```
 
 ### Troubleshooting Token Issues
@@ -223,153 +217,153 @@ Repository permissions:
 
 ## Usage
 
-> **Note**: If using npx instead of global installation, replace `gh-discussions` with `npx @taizo-pro/github-discussions-cli` in all examples below.
+> **Note**: If using npx instead of global installation, replace `ghd` with `npx @taizo-pro/github-discussions-cli` in all examples below.
 
 ### List Discussions
 ```bash
 # List discussions in current/default repository
-gh-discussions list
+ghd list
 
 # List discussions in specific repository
-gh-discussions list owner/repository
+ghd list owner/repository
 
 # Limit number of results
-gh-discussions list --first 10
+ghd list --first 10
 
 # Filter by category
-gh-discussions list --category General
+ghd list --category General
 
 # Filter by author
-gh-discussions list --author username
+ghd list --author username
 
 # Show only discussions with comments
-gh-discussions list --has-comments
+ghd list --has-comments
 
 # Show only discussions without comments
-gh-discussions list --no-comments
+ghd list --no-comments
 
 # Sort by creation date (ascending)
-gh-discussions list --sort created --order asc
+ghd list --sort created --order asc
 
 # Output as JSON
-gh-discussions list --format json
+ghd list --format json
 
 # Output as markdown table
-gh-discussions list --format markdown
+ghd list --format markdown
 ```
 
 ### View Discussion Details
 ```bash
 # Show discussion by number
-gh-discussions show 42
+ghd show 42
 
 # Show discussion in specific repository
-gh-discussions show 42 owner/repository
+ghd show 42 owner/repository
 ```
 
 ### Create Comments
 ```bash
 # Add comment with message
-gh-discussions comment 42 "Great discussion!"
+ghd comment 42 "Great discussion!"
 
 # Open editor for longer comments
-gh-discussions comment 42 --editor
+ghd comment 42 --editor
 
 # Comment in specific repository
-gh-discussions comment 42 "Thanks!" owner/repository
+ghd comment 42 "Thanks!" owner/repository
 ```
 
 ### Search Discussions
 ```bash
 # Search for discussions containing "bug"
-gh-discussions search "bug"
+ghd search "bug"
 
 # Search in specific repository
-gh-discussions search "feature request" owner/repository
+ghd search "feature request" owner/repository
 
 # Search only in titles
-gh-discussions search "announcement" --in title
+ghd search "announcement" --in title
 
 # Search with author filter
-gh-discussions search "help" --author username
+ghd search "help" --author username
 
 # Search with category filter
-gh-discussions search "question" --category General
+ghd search "question" --category General
 
 # Sort search results by comments
-gh-discussions search "popular" --sort comments --order desc
+ghd search "popular" --sort comments --order desc
 
 # Limit search results
-gh-discussions search "recent" --limit 5
+ghd search "recent" --limit 5
 
 # Output search results as JSON
-gh-discussions search "api" --format json
+ghd search "api" --format json
 ```
 
 ### Repository Statistics
 ```bash
 # Show basic statistics for current/default repository
-gh-discussions stats
+ghd stats
 
 # Show statistics for specific repository
-gh-discussions stats owner/repository
+ghd stats owner/repository
 
 # Show detailed statistics with recent activity
-gh-discussions stats --detailed
+ghd stats --detailed
 ```
 
 ### Create Discussions
 ```bash
 # Interactive creation
-gh-discussions create
+ghd create
 
 # With title and body
-gh-discussions create "Bug Report" "I found a bug..."
+ghd create "Bug Report" "I found a bug..."
 
 # Open editor for body
-gh-discussions create "Feature Request" --editor
+ghd create "Feature Request" --editor
 
 # Specify category
-gh-discussions create "Question" "How do I..." --category general
+ghd create "Question" "How do I..." --category general
 ```
 
 ### Edit Discussions
 ```bash
 # Interactive editing (opens editor)
-gh-discussions edit 42
+ghd edit 42
 
 # Edit title only
-gh-discussions edit 42 --title "Updated Title"
+ghd edit 42 --title "Updated Title"
 
 # Edit description only
-gh-discussions edit 42 --body "Updated description"
+ghd edit 42 --body "Updated description"
 
 # Edit both title and description
-gh-discussions edit 42 --title "New Title" --body "New description"
+ghd edit 42 --title "New Title" --body "New description"
 
 # Force interactive mode
-gh-discussions edit 42 --interactive
+ghd edit 42 --interactive
 
 # Edit in specific repository
-gh-discussions edit 42 --title "Update" owner/repository
+ghd edit 42 --title "Update" owner/repository
 ```
 
 ### Configuration
 ```bash
 # Show current configuration
-gh-discussions config --show
+ghd config --show
 
 # Set GitHub token
-gh-discussions config --token ghp_xxxxxxxxxxxx
+ghd config --token ghp_xxxxxxxxxxxx
 
 # Set default repository
-gh-discussions config --repo owner/repository
+ghd config --repo owner/repository
 
 # Set default output format
-gh-discussions config --format table
+ghd config --format table
 
 # Clear all configuration
-gh-discussions config --clear
+ghd config --clear
 ```
 
 ## Configuration Files
