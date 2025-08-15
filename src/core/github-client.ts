@@ -27,6 +27,11 @@ export interface GitHubDiscussionsClient {
     body: string,
     categoryId?: string
   ): Promise<Discussion>;
+  updateDiscussion(
+    discussionId: string,
+    title?: string,
+    body?: string
+  ): Promise<Discussion>;
 }
 
 export class GitHubClient implements GitHubDiscussionsClient {
@@ -323,6 +328,66 @@ export class GitHubClient implements GitHubDiscussionsClient {
       });
 
       const discussion = response.createDiscussion.discussion;
+      return {
+        id: discussion.id,
+        title: discussion.title,
+        author: {
+          login: discussion.author.login,
+          avatarUrl: discussion.author.avatarUrl,
+        },
+        createdAt: new Date(discussion.createdAt),
+        updatedAt: new Date(discussion.updatedAt),
+        commentCount: discussion.comments.totalCount,
+        category: discussion.category
+          ? { id: discussion.category.id, name: discussion.category.name }
+          : undefined,
+        url: discussion.url,
+        locked: discussion.locked,
+      };
+    } catch (error) {
+      throw this.handleError(error);
+    }
+  }
+
+  async updateDiscussion(
+    discussionId: string,
+    title?: string,
+    body?: string
+  ): Promise<Discussion> {
+    try {
+      const mutation = `
+        mutation UpdateDiscussion($discussionId: ID!, $title: String, $body: String) {
+          updateDiscussion(input: { discussionId: $discussionId, title: $title, body: $body }) {
+            discussion {
+              id
+              title
+              createdAt
+              updatedAt
+              url
+              locked
+              author {
+                login
+                avatarUrl
+              }
+              category {
+                id
+                name
+              }
+              comments {
+                totalCount
+              }
+            }
+          }
+        }
+      `;
+
+      const variables: any = { discussionId };
+      if (title !== undefined) variables.title = title;
+      if (body !== undefined) variables.body = body;
+
+      const response = await this.graphqlWithAuth(mutation, variables);
+
+      const discussion = response.updateDiscussion.discussion;
       return {
         id: discussion.id,
         title: discussion.title,
